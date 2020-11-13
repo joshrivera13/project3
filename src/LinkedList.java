@@ -1,11 +1,12 @@
 public class LinkedList <T extends Comparable<T>> implements List<T>{
 
-    private Node head;
-    private Node tail;
+    private Node <T> head;
+    private Node <T> tail;
     private boolean isSorted;
 
     public LinkedList(){
-        head = null;
+        head = new Node <T>(null);
+        head.setNext(tail);
         tail = null;
         isSorted = true;
     }//constructor
@@ -15,11 +16,19 @@ public class LinkedList <T extends Comparable<T>> implements List<T>{
             return false;
         }//if element is null
         else{
-            if(head == null){
-                head = new Node <T> (element);
-
+            if(tail == null){
+                tail = new Node <T> (element);
+                return true;
             }//if list is empty
+            else{
+                Node <T> addNode = new Node <T> (element);
+                tail.setNext(addNode);
+                tail = addNode;
+                isSorted = false;
+                return true;
+            }//adding to end of list
         }
+
     }//add to end of list
 
 
@@ -30,16 +39,17 @@ public class LinkedList <T extends Comparable<T>> implements List<T>{
         else{
             if(index == 0){
                 Node <T> addedNode = new Node <T>(element);
-                addedNode.setNext(head);
-                head = addedNode;
+                Node <T> ptr = head.getNext();
+                head.setNext(addedNode);
+                addedNode.setNext(ptr);
                 isSorted = false;
                 return true;
             }//adding to very front of list
             else{
-                Node ptr = head.getNext();
-                Node trl = head;
+                Node <T> ptr = head.getNext();
+                Node <T> trl = head;
                 int counter = 0;
-                while(counter != (index - 1)){
+                while(counter != index){
                     ptr = ptr.getNext();
                     trl = trl.getNext();
                     counter = counter + 1;
@@ -54,22 +64,85 @@ public class LinkedList <T extends Comparable<T>> implements List<T>{
     }//add to specified index
 
     public void clear(){
-        this = null;
+        tail = null;
+        head.setNext(tail);
+    }
+
+
+    public T get(int index){
+        if (index >= this.size()){
+            return null;
+        }//index out of range
+        else{
+            int counter = 0;
+            Node <T> ptr = head.getNext();
+            while (counter != index){
+                ptr = ptr.getNext();
+                counter = counter + 1;
+            }
+            return ptr.getData();
+        }
+    }
+
+    //TODO finish method
+    //public int indexOf(T element){
+
+    //}
+
+    public boolean isEmpty(){
+        if (tail == null){
+            return true;
+        }
+        return false;
     }
 
 
     public int size(){
         int counter = 0;
-        Node ptr = head.getNext();
-        while(ptr.getNext() != null){
-            counter = counter + 1;
-            ptr = ptr.getNext();
+        if (tail == null){
+            return counter;
         }
-        return counter;
+        else {
+            Node ptr = head.getNext();
+            while (ptr.getNext() != null) {
+                counter = counter + 1;
+                ptr = ptr.getNext();
+            }
+            return counter;
+        }
+
     }//size
 
+    public T remove(int index){
+        Node <T> ptr = head.getNext();
+        Node <T> trl = head;
+        int counter = 0;
+        while (counter != index - 1){
+            ptr = ptr.getNext();
+            trl = trl.getNext();
+            counter = counter + 1;
+        }
+        trl.setNext(ptr.getNext());
+        return ptr.getData();
+    }
+
+    public void sort(){
+        int i,j;
+        Node <T> ptr;
+        Node <T> temp;
+        for (i = 1; i < this.size(); i++){
+
+        }
 
 
 
+    }
+
+
+
+
+    public static void main(String[]args){
+        System.out.println("Hello World");
+    }
 
 }//class LinkedList
