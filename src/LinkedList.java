@@ -82,7 +82,7 @@ public class LinkedList <T extends Comparable<T>> implements List<T>{
             return ptr.getData();
         }
     }
-    //TODO fix this - crashing when inputted element is not in list
+
     public int indexOf(T element){
         if (element == null){
             return -1;
@@ -92,11 +92,12 @@ public class LinkedList <T extends Comparable<T>> implements List<T>{
         while (ptr.getData() != element){
             ptr = ptr.getNext();
             counter = counter + 1;
+            if (counter == this.size() - 1 && ptr.getData() != element){
+                return -1;
+            }
         }
-        if (counter == this.size() - 1 && ptr.getData() != element){
-            return -1;
-        }
-        else{return counter;}
+
+        return counter;
     }
 
     public boolean isEmpty(){
@@ -124,6 +125,9 @@ public class LinkedList <T extends Comparable<T>> implements List<T>{
     }//size
 
     public T remove(int index){
+        if (index >= this.size()){
+            return null;
+        }
         Node <T> ptr = head.getNext();
         Node <T> trl = head;
         int counter = 0;
@@ -248,8 +252,8 @@ public class LinkedList <T extends Comparable<T>> implements List<T>{
         System.out.println(testList.size());
         System.out.println(testList.toString());
         System.out.println(breaker);
-        testList.equalTo("c");
-        System.out.println(testList.toString());
+
+        System.out.println(testList.indexOf(null));
 
     }
 
