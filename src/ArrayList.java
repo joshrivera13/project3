@@ -15,7 +15,7 @@ public class ArrayList <T extends Comparable<T>> implements List<T>{
         else {
             if (arr[arr.length - 1] != null) {
                 arr = addFull(arr);
-                arr[this.size()] = element;
+                arr[this.size() + 1] = element;
                 isSorted = false;
                 return true;
             }//adding when full
@@ -185,17 +185,22 @@ public class ArrayList <T extends Comparable<T>> implements List<T>{
 
     public T[] addFull(T[] orig){
         T[] copy = (T[]) new Comparable[(orig.length * 2)];
-        for (int i = 0; i < copy.length; i++){
+        for (int i = 0; i < orig.length; i++){
             copy[i] = orig[i];
         }
         return copy;
     }
 
     public static void main(String[]args){
-
+        String breaker = "----------------------------------";
         ArrayList <String> testList = new ArrayList<String>();
         testList.add("hello");
+        testList.add("hi");
+        testList.add("yo");
+        testList.add("whats good");
         System.out.println(testList.toString());
+        System.out.println(breaker);
+
 
 
 
